@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import RunList from "./components/RunList";
+import MazeView from "./components/MazeView";
 
-function App() {
+export default function App() {
   const [runs, setRuns] = useState([]);
-  const [sortAsc, setSortAsc] = useState(true);
+  const [selected, setSelected] = useState(null);
+
+  const [sortType, setSortType] = useState("time");
 
   useEffect(() => {
     fetch("https://maze-telemetry.up.railway.app/runs")
@@ -11,21 +14,63 @@ function App() {
       .then(data => setRuns(data));
   }, []);
 
-  const sortedRuns = [...runs].sort((a, b) =>
-    sortAsc ? a.time - b.time : b.time - a.time
-  );
+  const sortedRuns = [...runs].sort((a, b) => {
+    if (sortType === "time") return a.time - b.time;
+    if (sortType === "size")
+      return (a.width * a.height) - (b.width * b.height);
+    return 0;
+  });
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Maze Runs Dashboard</h1>
+    <div style={styles.container}>
+      <div style={styles.sidebar}>
+        <h2>Runs</h2>
 
-      <button onClick={() => setSortAsc(!sortAsc)}>
-        Sort by time: {sortAsc ? "ASC" : "DESC"}
-      </button>
+        <div style={styles.buttons}>
+          <button onClick={() => setSortType("time")}>Sort: Time</button>
+          <button onClick={() => setSortType("size")}>Sort: Size</button>
+        </div>
 
-      <RunList runs={sortedRuns} />
+        <RunList
+          runs={sortedRuns}
+          selected={selected}
+          onSelect={setSelected}
+        />
+      </div>
+
+      <div style={styles.main}>
+        {selected ? (
+          <>
+            <h2>Maze Preview</h2>
+            <MazeView run={selected} />
+          </>
+        ) : (
+          <p>Select a run</p>
+        )}
+      </div>
     </div>
   );
 }
 
-export default App;
+const styles = {
+  container: {
+    display: "flex",
+    height: "100vh",
+    background: "#111",
+    color: "white"
+  },
+  sidebar: {
+    width: 320,
+    padding: 20,
+    borderRight: "1px solid #333"
+  },
+  main: {
+    flex: 1,
+    padding: 20
+  },
+  buttons: {
+    display: "flex",
+    gap: 10,
+    marginBottom: 10
+  }
+};

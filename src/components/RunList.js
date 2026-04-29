@@ -1,35 +1,30 @@
-import React, { useState } from "react";
-import MazeView from "./MazeView";
-
-export default function RunList({ runs }) {
-  const [selected, setSelected] = useState(null);
-
-  return (
-    <div style={{ display: "flex", gap: 20 }}>
-      <div style={{ width: 300 }}>
-        {runs.map((run, i) => (
-          <div
-            key={i}
-            onClick={() => setSelected(run)}
-            style={{
-              padding: 10,
-              marginBottom: 10,
-              background: "#222",
-              color: "white",
-              cursor: "pointer"
-            }}
-          >
-            <div>Time: {run.time} ms</div>
-            <div>Cells: {run.cells}</div>
-            <div>Turns: {run.turns}</div>
-            <div>Algo: {run.algorithm}</div>
-          </div>
-        ))}
-      </div>
-
+export default function RunList({ runs, selected, onSelect }) {
+    return (
       <div>
-        {selected && <MazeView run={selected} />}
+        {runs.map((run, i) => {
+          const isSelected = selected === run;
+  
+          return (
+            <div
+              key={i}
+              onClick={() => onSelect(run)}
+              style={{
+                padding: 12,
+                marginBottom: 10,
+                borderRadius: 10,
+                cursor: "pointer",
+                background: isSelected ? "#444" : "#222",
+                border: isSelected ? "2px solid #00ffcc" : "none"
+              }}
+            >
+              <div><b>{run.time} ms</b></div>
+              <div>Cells: {run.cells}</div>
+              <div>Turns: {run.turns}</div>
+              <div>Algo: {run.algorithm}</div>
+              <div>Size: {run.width}x{run.height}</div>
+            </div>
+          );
+        })}
       </div>
-    </div>
-  );
-}
+    );
+  }
