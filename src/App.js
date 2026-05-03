@@ -16,8 +16,13 @@ export default function App() {
 
   const sortedRuns = [...runs].sort((a, b) => {
     if (sortType === "time") return a.time - b.time;
+  
     if (sortType === "size")
       return (a.width * a.height) - (b.width * b.height);
+  
+    if (sortType === "created")
+      return new Date(b.createdAt) - new Date(a.createdAt);
+  
     return 0;
   });
 
@@ -29,6 +34,7 @@ export default function App() {
         <div style={styles.buttons}>
           <button onClick={() => setSortType("time")}>Sort: Time</button>
           <button onClick={() => setSortType("size")}>Sort: Size</button>
+          <button onClick={() => setSortType("created")}>Sort: Newest</button>
         </div>
 
         <RunList
