@@ -39,11 +39,11 @@ export default function RunList({ runs, selected, onSelect }) {
               {run.algorithm}
             </div>
 
-            <div>⏱ {run.time} ms</div>
-            <div>📦 {run.cells} cells</div>
-            <div>🔄 {run.turns} turns</div>
+            <div> {run.time} ms</div>
+            <div> {run.cells} cells</div>
+            <div> {run.turns} turns</div>
             <div>
-              📐 {run.width} × {run.height}
+              {run.width} × {run.height}
             </div>
           </div>
         );

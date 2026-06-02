@@ -29,7 +29,7 @@ export default function App() {
   return (
     <div style={styles.container}>
       <div style={styles.sidebar}>
-        <h1 style={styles.title}>🤖 Maze Runs</h1>
+        <h1 style={styles.title}>Maze Runs</h1>
 
         <div style={styles.buttons}>
           <button
@@ -66,23 +66,23 @@ export default function App() {
           <>
             <div style={styles.stats}>
               <div style={styles.statCard}>
-                🤖 {selected.algorithm}
+                {selected.algorithm}
               </div>
 
               <div style={styles.statCard}>
-                ⏱ {selected.time} ms
+               {selected.time} ms
               </div>
 
               <div style={styles.statCard}>
-                📦 {selected.cells} cells
+                {selected.cells} cells
               </div>
 
               <div style={styles.statCard}>
-                🔄 {selected.turns} turns
+                {selected.turns} turns
               </div>
 
               <div style={styles.statCard}>
-                📐 {selected.width} × {selected.height}
+                {selected.width} × {selected.height}
               </div>
             </div>
 
