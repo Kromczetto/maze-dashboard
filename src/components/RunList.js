@@ -1,30 +1,53 @@
 export default function RunList({ runs, selected, onSelect }) {
-    return (
-      <div>
-        {runs.map((run, i) => {
-          const isSelected = selected === run;
-  
-          return (
+  return (
+    <div>
+      {runs.map((run, i) => {
+        const isSelected = selected === run;
+
+        return (
+          <div
+            key={i}
+            onClick={() => onSelect(run)}
+            style={{
+              padding: 16,
+              marginBottom: 14,
+              borderRadius: 14,
+              cursor: "pointer",
+
+              background: isSelected
+                ? "#1e293b"
+                : "#111827",
+
+              border: isSelected
+                ? "2px solid #22d3ee"
+                : "1px solid #334155",
+
+              transition: "0.2s",
+
+              boxShadow:
+                "0 4px 12px rgba(0,0,0,0.25)"
+            }}
+          >
             <div
-              key={i}
-              onClick={() => onSelect(run)}
               style={{
-                padding: 12,
+                fontSize: 18,
+                fontWeight: 700,
                 marginBottom: 10,
-                borderRadius: 10,
-                cursor: "pointer",
-                background: isSelected ? "#444" : "#222",
-                border: isSelected ? "2px solid #00ffcc" : "none"
+                color: "#38bdf8"
               }}
             >
-              <div><b>{run.time} ms</b></div>
-              <div>Cells: {run.cells}</div>
-              <div>Turns: {run.turns}</div>
-              <div>Algo: {run.algorithm}</div>
-              <div>Size: {run.width}x{run.height}</div>
+              {run.algorithm}
             </div>
-          );
-        })}
-      </div>
-    );
-  }
+
+            <div>⏱ {run.time} ms</div>
+            <div>📦 {run.cells} cells</div>
+            <div>🔄 {run.turns} turns</div>
+            <div>
+              📐 {run.width} × {run.height}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
